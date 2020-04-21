@@ -1,0 +1,116 @@
+# +---------------------------------------------------------------------------+
+# | cfg.yaml  - simplicissimus                                                |
+# |                                                                           |
+# | This is the configuration for pankyll-theme-simplicissimus-example        |
+# |                                                                           |
+# | Version: 0.1.0                                                            |
+# |                                                                           |
+# | Changes:                                                                  |
+# |                                                                           |
+# | 0.1.0 2020-04-21 Christian Külker <c@c8i.org>                             |
+# |     - initial release                                                     |
+# |                                                                           |
+# +---------------------------------------------------------------------------+
+#
+# 0: default values
+default:
+    page_type:         title
+    keyword_page_type: keyword
+    l10n_locale:       en_US   # Feature 2: Localization
+    pdf_create:        False
+    index_list_type:   cards   # Feature 7: Keywords
+
+# 1. Global site parameters
+site:
+  url:         /                             # URL pfx - mandatory
+  title:       Simplicissimus Example        # str     - mandatory (fallback)
+  content_dir: content                       # dir     - mandatory
+  public_dir:  public                        # dir     - mandatory
+  themes_dir:  themes                        # dir     - mandatory
+  theme_name:  pankyll-theme-simplicissimus  # dir     - mandatory
+
+# 2. Feature: Internationalization
+#    at minimum you have do define 1 language (the default)
+locales:
+     en_US: English
+
+# 5. Feature: Navigation
+navigation:
+    en_US:
+        - link:
+            text: Home
+            url:  en_US
+        - link:
+            text: About
+            url:  en_US/About
+        - link:
+            text: Documentation
+            url:  en_US/Documentation
+        - link:
+            text: Pankyll Themes
+            url:  en_US/Pankyll-Themes
+        - link:
+            text: Example Sites
+            url:  en_US/Example-Sites
+        - link:
+            text: Categories
+            url:  en_US/Categories
+        - link:
+            text: Tags
+            url:  en_US/Tags
+        - link:
+            text: Languages
+            url: /
+    de_DE:
+        - link:
+            text: Home
+            url:  de_DE
+        - link:
+            text: Über
+            url:  de_DE/About
+        - link:
+            text: Dokumentation
+            url:  de_DE/Documentation
+        - link:
+            text: Pankyll Layouts (Themes)
+            url:  de_DE/Pankyll-Themes
+        - link:
+            text: Beispiel Seiten
+            url:  de_DE/Example-Sites
+        - link:
+            text: Kategorien
+            url:  de_DE/Categories
+        - link:
+            text: Stichworte
+            url:  de_DE/Tags
+        - link:
+            text: Sprachen
+            url: /
+
+# 7. Feature: Keywords
+# keywords: let pages define classes of keywords usually this is 'categories'
+#           and 'tags' but also others can be defined. If one class is added
+#           in this list, also a YAML section with the same name need to be
+#           added that defines 'text' and 'url' in all suported locales.
+keywords:
+    - categories
+    - tags
+
+categories:
+    en_US:
+        text: Categories
+        url:  en_US/Categories/
+    de_DE:
+        text: Kategorien
+        url:  de_DE/Categories/
+
+tags:
+    en_US:
+        text: Tags
+        url:  en_US/Tags/
+    de_DE:
+        text: Stichworte
+        url:  de_DE/Tags/
+
+
+
