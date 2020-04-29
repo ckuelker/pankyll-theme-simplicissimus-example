@@ -1,12 +1,12 @@
 [submodule "pandoc"]
 	path = pandoc
-	url = https://github.com/ckuelker/pankyll-pandoc
+	url = https://github.com/ckuelker/pankyll-pandoc.git
 	branch = master
 [submodule "content"]
 	path = content
-	url = https://github.com/ckuelker/pankyll-documentation
+	url = https://github.com/ckuelker/pankyll-documentation.git
 	branch = master
 [submodule "themes/pankyll-theme-simplicissimus"]
 	path = themes/pankyll-theme-simplicissimus
-	url = https://github.com/ckuelker/pankyll-theme-simplicissimus
+	url = https://github.com/ckuelker/pankyll-theme-simplicissimus.git
 	branch = master
