@@ -3,9 +3,12 @@
 # |                                                                           |
 # | This is the configuration for pankyll-theme-simplicissimus-example        |
 # |                                                                           |
-# | Version: 0.1.0                                                            |
+# | Version: 0.1.1                                                            |
 # |                                                                           |
 # | Changes:                                                                  |
+# |                                                                           |
+# | 0.1.1 2020-04-29 Christian Külker <c@c8i.org>                             |
+# |     - add css_local and js_local                                          |
 # |                                                                           |
 # | 0.1.0 2020-04-21 Christian Külker <c@c8i.org>                             |
 # |     - initial release                                                     |
@@ -19,6 +22,8 @@ default:
     l10n_locale:       en_US   # Feature 2: Localization
     pdf_create:        False
     index_list_type:   cards   # Feature 7: Keywords
+    css_local:         False
+    js_local:          False
 
 # 1. Global site parameters
 site:
