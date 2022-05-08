@@ -1,7 +1,7 @@
 ---
 title: README
 author: Christian Külker
-version: 0.1.1
+version: 0.1.2
 date: 2022-05-06
 
 ---
@@ -9,10 +9,11 @@ date: 2022-05-06
 # Abstract
 
 This document describes briefly the aim and content of the
-`pankyll-theme-simplicissimus-example` repository. The goal is to show the
-configuration and usage of the theme [Simplicissimus] by providing a working
-example with a directory tree that can be used as a base to build up a new
-site.
+`pankyll-theme-simplicissimus-example` repository.
+
+The goal of this repository is to show the configuration and usage of the theme
+[Simplicissimus] by providing a working example with a directory tree that can
+be used as a base to build up a new site.
 
 ![Github license](https://img.shields.io/github/license/ckuelker/pankyll-theme-simplicissimus-example.svg)
 ![Github issues](https://img.shields.io/github/issues/ckuelker/pankyll-theme-simplicissimus-example.svg?style=popout-square)
@@ -24,6 +25,7 @@ site.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.2   | 2022-05-09 | README.md                                            |
 | 0.1.1   | 2022-05-06 | Change cfg.yaml, README.md                           |
 | 0.1.0   | 2020-04-21 | Initial release                                      |
 
@@ -40,15 +42,23 @@ away. This [Pankyll] theme [Simplicissimus] example is a pre-configured
 
 Requires [Pankyll] and on [Debian] install the following:
 
-```bash
+As root
+
+```shell
 aptitude install pandoc make
-git clone --recursive https://github.com/ckuelker/pankyll-theme-simplicissimus-example.git
+```
+
+As user
+
+```shell
+export URL=https://github.com/ckuelker/pankyll-theme-simplicissimus-example.git
+git clone --recursive $URL
 ```
 
 ## Pankyll (Mandatory)
 
 We assume that [Pankyll] is installed and that the script `pankyll` is in
-your `PATH`. Read the [Pankyll] README document.
+your `PATH`. Read the [Pankyll] [README.md] document.
 
 ## Pandoc (Mandatory)
 
@@ -58,7 +68,7 @@ tested with `pandoc` version 2.2.1 and should give good results.
 
 **Installation for Debian:**
 
-```bash
+```shell
 aptitude install pandoc
 ```
 ## Make (Optional)
@@ -69,7 +79,7 @@ want to use it see the usage section.
 
 **Installation for Debian:**
 
-```bash
+```shell
 aptitude install make
 ```
 
@@ -77,31 +87,28 @@ aptitude install make
 
 Clone the example repository and its sub-modules
 
-```bash
+```shell
 git clone --recursive https://github.com/ckuelker/pankyll-theme-simplicissimus-example.git
 ```
 
 # Usage
 
-Build the site
+Update, build and see the site:
 
-```bash
+```shell
 cd pankyll-theme-simplicissimus-example
-make submodule-update # this takes some time
+make submodule-update
+make submoduleclean
+make submodule-pull
 make realclean
 make build
-```
-
-Start a server
-
-```bash
 make server
 ```
 
-Or shorter:
+Or all at once:
 
-```bash
-make submodule-update realclean build server
+```shell
+make all
 ```
 
 Open a browser and access the URL [http://localhost:8004](http://localhost:8004)
@@ -114,7 +121,10 @@ Open a browser and access the URL [http://localhost:8004](http://localhost:8004)
 
     Copyright (C) 2020, 2022 by Christian Kuelker, see LICENSE file.
 
+[Debian]: https://www.debian.org/
+[Newspaper]: https://github.com/ckuelker/pankyll-theme-newspaper/
+[Pandoc]: https://pandoc.org/
+[Pankyll]: https://www.pankyll.org/
+[Rankle]: https://github.com/ckuelker/pankyll-theme-rankle
+[README.md]: https://github.com/ckuelker/pankyll
 [Simplicissimus]: https://github.com/ckuelker/pankyll-theme-simplicissimus
-[Pankyll]: https://github.com/ckuelker/pankyll
-[Pandoc]:  https://pandoc.org/
-[Debian]:  https://www.debian.org/
