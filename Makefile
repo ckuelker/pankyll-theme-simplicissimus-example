@@ -3,34 +3,61 @@
 # |                                                                           |
 # | Pankyll-Theme-Simplicissimus-Example                                      |
 # |                                                                           |
-# | Version: 0.1.2 (change inline)                                            |
+# | Version: 0.1.3 (change inline)                                            |
 # |                                                                           |
 # | Changes:                                                                  |
 # |                                                                           |
+# | 0.1.3 2022-05-08 Christian Külker <c@c8i.org>                             |
+# |     - Add tests from theme rankle                                         |
+# |     - Remove pankyll.rsync at 'clean' target                              |
+# |     - Add target 'all'                                                    |
+# |     - Update LINKCHECK_PARAMS                                             |
+# |     - Add LINKCHECK_IGNORE                                                |
+# |     - Change target linkcheck-local-extern to linkcheck-extern            |
+# |                                                                           |
 # | 0.1.2 2020-04-29 Christian Külker <c@c8i.org>                             |
-# |     - add more phony targets                                              |
-# |     - read configuration partly from cfg.yaml                             |
-# |     - build example root index.html                                       |
-# |     - server target supports URL prefix                                   |
+# |     - Add more phony targets                                              |
+# |     - Read configuration partly from cfg.yaml                             |
+# |     - Build example root index.html                                       |
+# |     - Server target supports URL prefix                                   |
 # |                                                                           |
 # | 0.1.1 2020-04-21 Christian Külker <c@c8i.org>                             |
-# |     - add descriptive message for server target                           |
+# |     - Add descriptive message for server target                           |
 # |                                                                           |
 # | 0.1.0 2020-04-21 Christian Külker <c@c8i.org>                             |
-# |     - initial release                                                     |
+# |     - Initial release                                                     |
 # |                                                                           |
 # +---------------------------------------------------------------------------+
 #
 # Makefile version
-VERSION=0.1.0
+THEME:=simplicissimus
+VERSION=0.1.3
 PORT=8004
-NS=pankyll-theme-simplicissimus-example
+NS=pankyll-theme-$(THEME)-example
 # -----------------------------------------------------------------------------
 # NO CHANGES BEYOND THIS POINT
 ifndef VERSION
 $(error VERSION is NOT defined)
 endif
-THEME:=simplicissimus
+# Test if pankyll is installed and in the PATH
+ifeq (, $(shell which pankyll))
+  $(error "No pankyll in $(PATH), consider installing pankyll")
+else
+  PANKYLL=$(shell which pankyll)
+endif
+# Test if pandoc is installed and in the PATH
+ifeq (, $(shell which pandoc))
+  $(error "No pandoc in $(PATH), consider installing pandoc")
+else
+  PANDOC=$(shell which pandoc)
+endif
+# Test if pdflatex, installed and in the PATH
+# pdflatex is default option for pandoc
+ifeq (, $(shell which pdflatex))
+  $(error "No pdflatex in $(PATH), consider installing pdflatex")
+else
+  PDFLATEX=$(shell which pdflatex)
+endif
 HOST=$(shell hostname)
 DSTD=$(shell python3 -c "import yaml;print(yaml.load(open('cfg.yaml'))['site']['public_dir'])")
 PFX=$(shell python3 -c "import yaml;print(yaml.load(open('cfg.yaml'))['site']['url'])")
@@ -39,13 +66,14 @@ PFXDIR=$(shell echo "$(PFX)"|sed -e 's%^/%%')
 NPROC=$(shell nproc)
 WDIR=$(shell echo $(DSTD) $(PFXDIR)|tr ' ' '/') # public | public/PFXDIR
 DEBUG_PRINT='1[$@]2[$%]3[$<]4[$?]5[$^]6[$+]7[$|]8[$*]9[$(@D)]10[$(@F)]11[$(*D)]\n12[$(*F)]13[$(%D)]14[$(%F)]15[$(<D)]16[$(<F)]17[$(^D)]18[$(^F)]\n19[$(+D)]20[$(+F)]21[$(?D)]22[$(?F)]\n'
+# /webfonts/fa-regular-400 requested by all.min.css but not provided
+LINKCHECK_IGNORE:=/webfonts/fa-regular-400
 LINKCHECK_SERVER:=http://localhost:$(PORT)
-LINKCHECK_PARAMS:=--no-status -o blacklist $(LINKCHECK_SERVER)
+LINKCHECK_PARAMS:=--no-status --ignore-url=$(LINKCHECK_IGNORE) -o blacklist $(LINKCHECK_SERVER)
 L:=============================================================================
 .PHONY: build clean htmlclean info markdownclean pdfclean realclean server \
 	submodule-update test usage submoduleclean submodule-pull \
 	repository-update
-
 usage:
 	@echo "$(L)"
 	@echo "USAGE:"
@@ -64,6 +92,7 @@ usage:
 	@echo "make repository-update: update git repository"
 	@echo "make build            : build project"
 	@echo "make server           : start a development server on port $(PORT)"
+	@echo "make all              : update submodules, realclean, build, server"
 info:
 	@echo "NS     : [$(NS)]"
 	@echo "VERSION: [$(VERSION)]"
@@ -89,7 +118,7 @@ publicclean:
 	rm -rf $(DSTD)
 # clean process files
 clean:
-	rm -f pankyll.log pankyll.err pankyll.out
+	rm -f pankyll.log pankyll.err pankyll.out pankyll.rsync
 # the make the submodule clean: WARNING changes will be lost
 submoduleclean:
 	cd pandoc && git checkout master
@@ -139,14 +168,12 @@ server:
 	    cp -a public/* /tmp/$(NS)/$(WDIR);\
 	    cd /tmp/$(NS)/$(DSTD) && python3 -m http.server $(PORT);\
 	fi
+all: submodule-update submoduleclean submodule-pull realclean build server
 linkcheck-local:
 	@echo "Check local links via $(LINKCHECK_SERVER), will report broken links"
 	linkchecker $(LINKCHECK_PARAMS)
 	@echo "Links PASS"
-linkcheck-local-extern:
+linkcheck-extern:
 	@echo "Check local and remote links via $(LINKCHECK_SERVER), will report broken links"
 	linkchecker --check-extern $(LINKCHECK_PARAMS)
 	@echo "Links PASS"
-
-
-
