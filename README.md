@@ -1,8 +1,8 @@
 ---
 title: README
 author: Christian Külker
-version: 0.1.2
-date: 2022-05-06
+version: 0.1.3
+date: 2022-05-09
 
 ---
 
@@ -25,6 +25,7 @@ be used as a base to build up a new site.
 
 | Version | Date       | Notes                                                |
 | ------- | ---------- | ---------------------------------------------------- |
+| 0.1.3   | 2022-05-09 | Makefile                                             |
 | 0.1.2   | 2022-05-09 | README.md                                            |
 | 0.1.1   | 2022-05-06 | Change cfg.yaml, README.md                           |
 | 0.1.0   | 2020-04-21 | Initial release                                      |
