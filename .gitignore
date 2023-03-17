@@ -5,3 +5,5 @@ pankyll.out
 public/
 *.swp
 *~
+log
+public
