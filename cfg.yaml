@@ -3,10 +3,12 @@
 # |                                                                           |
 # | This is the configuration for pankyll-theme-simplicissimus-example        |
 # |                                                                           |
-# | Version: 0.1.2                                                            |
+# | Version: 0.1.3                                                            |
 # |                                                                           |
 # | Changes:                                                                  |
 # |                                                                           |
+# | 0.1.3 2023-03-17 Christian Külker <c@c8i.org>                             |
+# |     - Improve writing, comments                                           |
 # | 0.1.2 2022-05-20 Christian Külker <c@c8i.org>                             |
 # |     - Add feature section                                                 |
 # | 0.1.1 2020-04-29 Christian Külker <c@c8i.org>                             |
@@ -109,10 +111,13 @@ navigation:
             url: /
 
 # 7. Feature: Keywords
-# keywords: let pages define classes of keywords usually this is 'categories'
-#           and 'tags' but also others can be defined. If one class is added
-#           in this list, also a YAML section with the same name need to be
-#           added that defines 'text' and 'url' in all suported locales.
+#
+# keywords: Let pages define classes of keywords, usually these are
+#           'categories' and 'tags', but others can be defined. If a class is
+#           added to this list, a YAML section with the same name must also be
+#           added, which defines 'text' and 'url' in all supported locales.
+#           For this example we have 'categories:' and 'tags:'.
+#
 keywords:
     - categories
     - tags
