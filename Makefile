@@ -3,10 +3,14 @@
 # |                                                                           |
 # | Pankyll-Theme-Simplicissimus-Example                                      |
 # |                                                                           |
-# | Version: 0.1.5 (change inline)                                            |
+# | Version: 0.1.6 (change inline)                                            |
 # |                                                                           |
 # | Changes:                                                                  |
 # |                                                                           |
+# | 0.1.5 2022-05-20 Christian Külker <c@c8i.org>                             |
+# |     - Improve writing, fix typo                                           |
+# |     - Add missing dummy prerequisite to server target                     |
+# |     - Fix version                                                         |
 # | 0.1.5 2022-05-20 Christian Külker <c@c8i.org>                             |
 # |     - Improve 'info' target                                               |
 # |     - Add 'update' target                                                 |
@@ -35,7 +39,7 @@
 #
 # Makefile version
 THEME:=simplicissimus
-VERSION=0.1.4
+VERSION=0.1.6
 PORT=8004
 NS=pankyll-theme-$(THEME)-example
 # -----------------------------------------------------------------------------
@@ -55,8 +59,8 @@ ifeq (, $(shell which pandoc))
 else
   PANDOC=$(shell which pandoc)
 endif
-# Test if pdflatex, installed and in the PATH
-# pdflatex is default option for pandoc
+# Test if pdflatex is installed and in the PATH
+# For pandoc 'pdflatex' is the default option
 ifeq (, $(shell which pdflatex))
   $(error "No pdflatex in $(PATH), consider installing pdflatex")
 else
@@ -87,22 +91,22 @@ usage:
 	@echo "$(L)"
 	@echo "USAGE:"
 	@echo "$(L)"
-	@echo "make usage            : this information"
-	@echo "make info             : print more info"
-	@echo "make clean            : remove porcess files"
-	@echo "make markdownclean    : remove all *.md from target (debug)"
-	@echo "make htmlclean        : remove all *.html from target (debug)"
-	@echo "make pdfclean         : remove all *.pdf from target (debug)"
-	@echo "make submoduleclean   : remove all changes from content, pandoc"
+	@echo "make usage            : This information"
+	@echo "make info             : Print more info"
+	@echo "make clean            : Remove process files"
+	@echo "make markdownclean    : Remove all *.md from target (debug)"
+	@echo "make htmlclean        : Remove all *.html from target (debug)"
+	@echo "make pdfclean         : Remove all *.pdf from target (debug)"
+	@echo "make submoduleclean   : Remove all changes from content, pandoc"
 	@echo "                        and themes/pankyll-theme-$(THEME)"
-	@echo "make realclean        : remove target"
-	@echo "make submodule-update : update git sub-modules configuration"
-	@echo "make submodule-pull   : get latest git sub-module update"
-	@echo "make repository-update: update git repository"
-	@echo "make update           : submoduleclean submodule-update submodule-pull repository-update"
-	@echo "make build            : build project"
-	@echo "make server           : start a development server on port $(PORT)"
-	@echo "make all              : update realclean build server"
+	@echo "make realclean        : Remove target"
+	@echo "make submodule-update : Update git sub-modules configuration"
+	@echo "make submodule-pull   : Get latest git sub-module update"
+	@echo "make repository-update: Update git repository"
+	@echo "make update           : Submoduleclean submodule-update submodule-pull repository-update"
+	@echo "make build            : Build project"
+	@echo "make server           : Start a development server on port $(PORT)"
+	@echo "make all              : Update realclean build server"
 info:
 	@echo "NS     : [$(NS)]"
 	@echo "VERSION: [$(VERSION)]"
@@ -114,27 +118,27 @@ info:
 	@echo "NPROC  : [$(NPROC)]"
 	@echo "HOST   : [$(HOST)]"
 	git submodule status --recursive
-# for development (might remove too much or too less files for a clean build)
+# For development (might remove too much or too less files for a clean build)
 markdownclean:
 	find $(DSTD) -name "*.md"|xargs -d '\n' rm -f
-# for development (might remove too much or too less files for a clean build)
+# For development (might remove too much or too less files for a clean build)
 htmlclean:
 	find $(DSTD) -name "*.html"|xargs -d '\n' rm -f
-# for development (might remove too much or too less files for a clean build)
+# For development (might remove too much or too less files for a clean build)
 pdfclean:
 	find $(DSTD) -name "*.pdf"|xargs -d '\n' rm -f
-# for development (might remove too much or too less files for a clean build)
+# For development (might remove too much or too less files for a clean build)
 publicclean:
 	rm -rf $(DSTD)
-# clean process files
+# Clean process files
 clean:
 	rm -f pankyll.log pankyll.rsync
-# the make the submodule clean: WARNING changes will be lost
+# The make the sub-module clean: WARNING changes will be lost
 submoduleclean:
 	cd pandoc && git checkout master
 	cd content && git checkout master
 	cd themes/pankyll-theme-$(THEME) && git checkout master
-# clean build target
+# Clean build target
 realclean: clean publicclean
 test:
 	@echo "$(DEBUG_PRINT)"
@@ -142,7 +146,7 @@ static:
 	mkdir -p $@
 $(DSTD):
 	mkdir -p $@
-# make sure pankyll is in your PATH
+# Make sure pankyll is in your PATH
 build: static $(DSTD)
 	@echo "running pankyll - this can take a while (logfile: pankyll.log)"
 	@echo $(L)
@@ -164,7 +168,7 @@ submodule-pull: submoduleclean
 	cd content && git pull
 	cd themes/pankyll-theme-$(THEME) && git pull
 update: submoduleclean submodule-update submodule-pull repository-update
-server:
+server: $(DSTD)
 	@if [ "$(PFX)" = "/" ]; then \
 	    echo "$(L)\nhttp://localhost:$(PORT)\nhttp://${HOST}:$(PORT)\n$(L)"; \
 	else \
